@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum BossStateEnum {
-    WaitPatten, Patten1, Patten2, Patten3
+    WaitPattern, Pattern1, Pattern2, Pattern3
 }
 
 public class Boss : Enemy {
@@ -13,8 +14,17 @@ public class Boss : Enemy {
     public Transform rightEyeTrm;
     public Transform leftHandTrm;
     public Transform rightHandTrm;
+    
+    [Header("Pattern1 Setting")]
+    public Transform leftHandAttackTrm;
+    public Transform rightHandAttackTrm;
+
+    [Header("Pattern2 Setting")]
+    public List<Enemy> enemyPrefabs;
 
     [HideInInspector] public float lastPattenTime;
+
+    public LineRenderer lineRendererCompo;
 
     protected override void Awake() {
         base.Awake();
@@ -32,23 +42,29 @@ public class Boss : Enemy {
                 Debug.LogError($"[Enemy Boss] : Not Found State [{typeName}]");
             }
         }
+
+                
+        leftHandAttackTrm.SetParent(null);
+        rightHandAttackTrm.SetParent(null);
+
+        lineRendererCompo = GetComponent<LineRenderer>();
+        lineRendererCompo.enabled = false;
     }
 
     private void Start() {
-        StateMachine.Initialize(BossStateEnum.WaitPatten, this);
+        StateMachine.Initialize(BossStateEnum.WaitPattern, this);
     }
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
     }
 
-    public bool CanPattenStart() {
+    public bool CanPatternStart() {
         return lastPattenTime + attackCooldown <= Time.time;
     }
 
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public override void Attack() => StateMachine.CurrentState.AnimationAttackTrigger();
-
 
     public override void Catched() { }
 }

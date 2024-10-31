@@ -39,11 +39,6 @@ public class LaserEnemy : Enemy {
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
-
-        // 테스트 코드
-        if (Keyboard.current.tKey.wasPressedThisFrame) {
-            StateMachine.ChangeState(LaserEnemyStateEnum.Stealth);
-        }
     }
 
     public override void Catched() {
