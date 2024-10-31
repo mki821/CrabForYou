@@ -38,6 +38,8 @@ public class Player : Entity, IDamageable
 
         Rope = GetComponent<PlayerRope>();
         Rope.Initialize(this);
+        
+        GetComponent<PlayerPortal>().Initialize(this);
 
         StateMachine = new PlayerStateMachine();
 

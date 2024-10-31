@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public enum RangeEnemyStateEnum {
-    Caught, Battle, Attack, Escape, Dead
+    Catched, Battle, Attack, Escape, Dead
 }
 
 public class RangeEnemy : Enemy {
@@ -18,6 +18,7 @@ public class RangeEnemy : Enemy {
     public Vector2 playerCheckOffset; // 오프셋
     public Projectile projectilePrf;
     public float shootPower;
+    public float escapeCooldown;
 
     public LineRenderer lineRendererCompo {get; private set;}
 
@@ -59,11 +60,24 @@ public class RangeEnemy : Enemy {
         return  Instantiate(projectilePrf);
     }
 
+    private bool isFirstEscape = true;
+    public bool CanEscape() {
+        if (isFirstEscape == true) {
+            isFirstEscape = false;
+            return true;
+        }
+        return lastEscapeTime + escapeCooldown <= Time.time;
+    }
+
     protected override void OnDrawGizmos() {
         base.OnDrawGizmos();
 
         // escape로 들어갈 범위 박스
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube((Vector2)transform.position + playerCheckOffset, playerCheckRange);
+    }
+
+    public override void Catched() {
+        StateMachine.ChangeState(RangeEnemyStateEnum.Catched);
     }
 }

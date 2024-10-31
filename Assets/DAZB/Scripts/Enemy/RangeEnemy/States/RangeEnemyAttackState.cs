@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
     private RangeEnemy enemy;
-    
-    // Store original local position and rotation of the Hand
+
     private Vector3 originalHandLocalPosition;
     private Quaternion originalHandLocalRotation;
 
@@ -39,7 +38,6 @@ public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
         enemy.lastAttackTime = Time.time;
         enemy.lineRendererCompo.enabled = false;
 
-        // Reset Hand position and rotation to original local values
         enemy.Hand.transform.localPosition = originalHandLocalPosition;
         enemy.Hand.transform.localRotation = originalHandLocalRotation;
 
@@ -72,7 +70,6 @@ public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
         Vector3 targetPosition = enemy.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
         enemy.Hand.transform.position = Vector3.Lerp(enemy.Hand.transform.position, targetPosition, enemy.aimingSpeed * Time.deltaTime);
 
-        // Save the shoot direction for the projectile
         finallyShootDir = smoothEndPosition - startLaserPosition;
         float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg;
         enemy.Hand.transform.rotation = Quaternion.Euler(0, 0, smoothAngle);

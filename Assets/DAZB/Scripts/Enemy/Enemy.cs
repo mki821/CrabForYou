@@ -16,6 +16,7 @@ public abstract class Enemy : Entity, IDamageable {
     public Vector2 canAttackCheckOffset;
 
     [SerializeField] private int _health;
+    [HideInInspector] public bool isCatchCanceled;
 
     public abstract void AnimationFinishTrigger();
     public abstract void Attack();
@@ -48,4 +49,5 @@ public abstract class Enemy : Entity, IDamageable {
     {
         _health -= amount;
     }
+    public abstract void Catched();
 }

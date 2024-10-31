@@ -44,7 +44,7 @@ public class RangeEnemyBattleState : EnemyState<RangeEnemyStateEnum> {
             }
 
             if (enemy.IsPlayerInRange(enemy.playerCheckOffset, enemy.playerCheckRange)) {
-                if (!enemy.CanAttack()) {
+                if (!enemy.CanAttack() && enemy.CanEscape()) {
                     stateMachine.ChangeState(RangeEnemyStateEnum.Escape);
                 } 
             }
