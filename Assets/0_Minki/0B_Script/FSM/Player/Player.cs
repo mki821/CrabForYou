@@ -11,6 +11,7 @@ public class Player : Entity, IDamageable
 
     [field: SerializeField] public PlayerStat Stat { get; private set; }
     private int _health;
+
     #region Settings
 
     [Header("Default Settings")]
@@ -25,6 +26,7 @@ public class Player : Entity, IDamageable
 
     public PlayerRope Rope { get; private set; }
     public Weapon Weapon { get; private set; }
+    private HealthUI _healthUI;
     
     protected override void Awake() {
         base.Awake();
@@ -34,12 +36,15 @@ public class Player : Entity, IDamageable
 
         //KJH code maybe conflict just merge
         Weapon = transform.Find("Weapon").GetComponent<Weapon>();
-        _health = (int)Stat.maxHealth.GetValue();
+        _health = (int)Stat.MaxHealth;
 
         Rope = GetComponent<PlayerRope>();
         Rope.Initialize(this);
         
         GetComponent<PlayerPortal>().Initialize(this);
+
+        _healthUI = GetComponent<HealthUI>();
+        _healthUI.Init((int)Stat.MaxHealth);
 
         StateMachine = new PlayerStateMachine();
 
@@ -91,6 +96,7 @@ public class Player : Entity, IDamageable
     public void ApplyDamage()
     {
         _health--;
+        _healthUI.Damaged();
         if (_health <= 0) 
             StateMachine.ChangeState(PlayerStateEnum.Dead);
     }

@@ -13,7 +13,6 @@ public class DamageCaster : MonoBehaviour
 
     public void Cast(int damage, Vector2 position, Vector2 size, float angle, float radius, CastingType type)
     {
-        Debug.Log($"Casting by {type}");
         switch (type)
         {
             case CastingType.Circle:

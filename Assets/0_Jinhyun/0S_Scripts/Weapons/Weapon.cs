@@ -29,12 +29,8 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Attack(Entity owner)
     {
-        if (_lastAttackTime < _attackDelay + Time.time)
-        {
-            _lastAttackTime = Time.time;
-            Vector2 curPos = (Vector2)transform.position;
-            damageCaster.Cast(_damage, curPos + _castPos, _castSize, _castAngle, _castRadius, castType);
-        }
+        Vector2 curPos = (Vector2)transform.position;
+        damageCaster.Cast(_damage, curPos + _castPos, _castSize, _castAngle, _castRadius, castType);
     }
 
     private void OnDrawGizmos()
