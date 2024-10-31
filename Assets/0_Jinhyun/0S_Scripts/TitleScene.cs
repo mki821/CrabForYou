@@ -25,8 +25,18 @@ public class TitleScene : MonoBehaviour
             _leftHand.transform.parent = null;
             _rightHand.transform.parent = null;
         });
+        seq.AppendCallback(() =>
+        {
+            print(null);
+            //SoundManager.Instance.PlayOneShot("DDAKDDAK.wav");
+        });
         seq.Append(_leftHand.transform.DOMove(new Vector2(-5.12f, 2.92f), 1.1f).SetEase(Ease.InElastic));
         seq.AppendInterval(0.2f);
+        seq.AppendCallback(() =>
+        {
+            print(null);
+            //SoundManager.Instance.PlayOneShot("DRILLWIING.wav");
+        });
         seq.Append(_rightHand.transform.DOMove(new Vector2(5.28f, 4.53f), 1.5f).SetEase(Ease.Linear));
         seq.Join(_rightHand.transform.DORotate(Vector3.zero, 0.8f));
         seq.AppendInterval(0.5f);
