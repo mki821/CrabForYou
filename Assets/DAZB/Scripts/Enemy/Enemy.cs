@@ -1,9 +1,11 @@
+using System.Net.Http.Headers;
 using UnityEngine;
 
-public abstract class Enemy : Entity {
+public abstract class Enemy : Entity, IDamageable {
     public LayerMask whatIsPlayer;
 
     public float moveSpeed;
+
 
     [Header("Attack Setting")]
     public float attackCooldown;
@@ -12,6 +14,8 @@ public abstract class Enemy : Entity {
     [Header("Detect Value Setting")]
     public Vector2 canAttackRange;
     public Vector2 canAttackCheckOffset;
+
+    [SerializeField] private int _health;
 
     public abstract void AnimationFinishTrigger();
     public abstract void Attack();
@@ -33,5 +37,15 @@ public abstract class Enemy : Entity {
         // Can Attack Range;
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube((Vector2)transform.position + canAttackCheckOffset * FacingDirection, canAttackRange);
+    }
+
+    public void ApplyDamage()
+    {
+        return;
+    }
+
+    public void ApplyDamage(int amount)
+    {
+        _health -= amount;
     }
 }
