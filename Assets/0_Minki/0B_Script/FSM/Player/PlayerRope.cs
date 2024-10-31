@@ -151,7 +151,8 @@ public class PlayerRope : MonoBehaviour
             yield return null;
         }
         _grabTrm.SetParent(transform);
-        _grabTrm.rotation = Quaternion.identity;
+        _grabTrm.localPosition = _originPosition;
+        _grabTrm.localRotation = Quaternion.identity;
     }
 
     private void OnDrawGizmos() {
