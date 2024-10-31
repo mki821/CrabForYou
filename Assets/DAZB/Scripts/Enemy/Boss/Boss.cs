@@ -8,6 +8,14 @@ public enum BossStateEnum {
 public class Boss : Enemy {
     public EnemyStateMachine<BossStateEnum> StateMachine {get; private set;}
 
+    [Header("Boss Setting")]
+    public Transform leftEyeTrm;
+    public Transform rightEyeTrm;
+    public Transform leftHandTrm;
+    public Transform rightHandTrm;
+
+    [HideInInspector] public float lastPattenTime;
+
     protected override void Awake() {
         base.Awake();
         StateMachine = new EnemyStateMachine<BossStateEnum>();
@@ -32,6 +40,10 @@ public class Boss : Enemy {
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
+    }
+
+    public bool CanPattenStart() {
+        return lastPattenTime + attackCooldown <= Time.time;
     }
 
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

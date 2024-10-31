@@ -8,7 +8,7 @@ public abstract class Enemy : Entity, IDamageable {
 
 
     [Header("Attack Setting")]
-    public float attackCooldown;
+    public float attackCooldown; // 보스는 패턴 쿨타임
     [HideInInspector] public float lastAttackTime;
 
     [Header("Detect Value Setting")]
