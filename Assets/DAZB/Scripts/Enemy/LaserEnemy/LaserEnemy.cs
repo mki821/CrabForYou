@@ -10,6 +10,10 @@ public enum LaserEnemyStateEnum {
 public class LaserEnemy : Enemy {
     public EnemyStateMachine<LaserEnemyStateEnum> StateMachine;
 
+    public Transform firePos;
+    public Transform Hand;
+    public float aimingSpeed;
+
     public LineRenderer lineRendererCompo {get; private set;}
 
     protected override void Awake() {

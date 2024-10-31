@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http.Headers;
 using UnityEngine;
 
@@ -15,8 +16,10 @@ public abstract class Enemy : Entity, IDamageable {
     public Vector2 canAttackRange;
     public Vector2 canAttackCheckOffset;
 
-    [SerializeField] private int _health;
+    [SerializeField] private int health;
     [HideInInspector] public bool isCatchCanceled;
+
+    public event Action DeadEvent;
 
     public abstract void AnimationFinishTrigger();
     public abstract void Attack();
@@ -45,13 +48,18 @@ public abstract class Enemy : Entity, IDamageable {
         return;
     }
 
-    public T CreateObject<T>(T prefab) where T : Object {
+    public T CreateObject<T>(T prefab) where T : UnityEngine.Object {
         return Instantiate(prefab);
     }
 
     public void ApplyDamage(int amount)
     {
-        _health -= amount;
+        health -= amount;
+
+        if (health <= 0) {
+            isDead = true;
+            DeadEvent?.Invoke();
+        }
     }
     public abstract void Catched();
 }
