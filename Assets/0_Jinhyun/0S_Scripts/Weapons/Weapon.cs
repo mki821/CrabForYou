@@ -32,7 +32,8 @@ public abstract class Weapon : MonoBehaviour
         if (_lastAttackTime < _attackDelay + Time.time)
         {
             _lastAttackTime = Time.time;
-            damageCaster.Cast(_damage, _castPos, _castSize, _castAngle, _castRadius, castType);
+            Vector2 curPos = (Vector2)transform.position;
+            damageCaster.Cast(_damage, curPos + _castPos, _castSize, _castAngle, _castRadius, castType);
         }
     }
 
@@ -41,11 +42,11 @@ public abstract class Weapon : MonoBehaviour
         Gizmos.color = Color.yellow;
         if(castType == CastingType.Circle)
         {
-            Gizmos.DrawWireSphere(_castPos, _castRadius);
+            Gizmos.DrawWireSphere((Vector2)transform.position+_castPos, _castRadius);
         }
         else if (castType == CastingType.Box)
         {
-            Gizmos.DrawWireCube(_castPos, _castSize);
+            Gizmos.DrawWireCube((Vector2)transform.position + _castPos, _castSize);
         }
     }
 }
