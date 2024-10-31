@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Direction {
@@ -10,10 +12,16 @@ public class Map : MonoBehaviour
     public Portal downPortal;
     public Portal rightPortal;
     public Portal leftPortal;
+    
+    [SerializeField] private List<Enemy> _enemyList;
 
     public GameObject icon;
+    private int direction;
 
     public Vector2Int mapPosition;
+
+    private bool _isVisited = false;
+    private int _enemyCount = 0;
 
     private void Awake() {
         upPortal.Init(this);
@@ -41,7 +49,9 @@ public class Map : MonoBehaviour
         return direction;
     }
 
-    public void OpenPortal(int direction) {
+    public void ActovePortal(int direction) {
+        this.direction = direction;
+
         if((direction & (int)Direction.Up) > 0)
             upPortal.gameObject.SetActive(true);
         if((direction & (int)Direction.Down) > 0)
@@ -50,5 +60,56 @@ public class Map : MonoBehaviour
             rightPortal.gameObject.SetActive(true);
         if((direction & (int)Direction.Left) > 0)
             leftPortal.gameObject.SetActive(true);
+    }
+
+    private void OpenPortal() {
+        if((direction & (int)Direction.Up) > 0)
+            upPortal.Open();
+        if((direction & (int)Direction.Down) > 0)
+            downPortal.Open();
+        if((direction & (int)Direction.Right) > 0)
+            rightPortal.Open();
+        if((direction & (int)Direction.Left) > 0)
+            leftPortal.Open();
+    }
+
+    private void ClosePortal() {
+        if((direction & (int)Direction.Up) > 0)
+            upPortal.Close();
+        if((direction & (int)Direction.Down) > 0)
+            downPortal.Close();
+        if((direction & (int)Direction.Right) > 0)
+            rightPortal.Close();
+        if((direction & (int)Direction.Left) > 0)
+            leftPortal.Close();
+    }
+
+    public void EnterPlayer() {
+        if(_isVisited) return;
+
+        _isVisited = true;
+        ClosePortal();
+        StartCoroutine(SpawnEnemy());
+    }
+
+    private IEnumerator SpawnEnemy() {
+        yield return new WaitForSeconds(1f);
+        
+        _enemyCount = _enemyList.Count;
+        for(int i = 0; i < _enemyList.Count; ++i) {
+            _enemyList[i].gameObject.SetActive(true);
+            _enemyList[i].DeadEvent += () => {
+                DecreaseCount();
+                _enemyList.RemoveAt(i);
+            };
+        }
+    }
+
+    private void DecreaseCount() {
+        --_enemyCount;
+
+        if(_enemyCount == 0) {
+            OpenPortal();
+        }
     }
 }
