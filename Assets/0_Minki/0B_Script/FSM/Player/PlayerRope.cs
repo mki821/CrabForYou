@@ -3,10 +3,12 @@ using UnityEngine;
 public class PlayerRope : MonoBehaviour
 {
     public Vector2 anchorPosition;
+    // public Enemy targetEnemy;
     
     [SerializeField] private float _ropeDistance;
     [SerializeField] private float _ropeSpeed = 2f;
-    [SerializeField] private LayerMask _whatIsRopable;
+    [SerializeField] private LayerMask _whatIsRopeable;
+    [SerializeField] private LayerMask _whatIsEnemy;
 
     private bool _isGrab = false;
 
@@ -43,13 +45,18 @@ public class PlayerRope : MonoBehaviour
 
         direction.Normalize();
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, _whatIsRopable);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, _whatIsRopeable | _whatIsEnemy);
 
         if(hit.collider != null) {
-            anchorPosition = hit.point;
-            _isGrab = true;
-            
-            _player.StateMachine.ChangeState(PlayerStateEnum.Rope);
+            if((1 << hit.collider.gameObject.layer) == _whatIsRopeable.value) {
+                anchorPosition = hit.point;
+                _isGrab = true;
+                
+                _player.StateMachine.ChangeState(PlayerStateEnum.Rope);
+            }
+            // else if(hit.collider.TryGetComponent(out Enemy enemy)) {
+                // targetEnemy = enemy;
+            // }
         }
     }
 
@@ -57,5 +64,10 @@ public class PlayerRope : MonoBehaviour
         _isGrab = false;
         _lineRenderer.SetPosition(0, Vector2.zero);
         _lineRenderer.SetPosition(1, Vector2.zero);
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _ropeDistance);
     }
 }
