@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
+    public Transform weaponParent;
+
     public Transform firePos;
     public List<Transform> dots = new(); 
 
@@ -19,6 +21,7 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
+        weaponParent = transform.parent;
         player = transform.parent.GetComponent<Player>();
     }
 
@@ -43,6 +46,7 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator AttackToMousePos()
     {
+        transform.parent = null;
         (player as Entity).CanFlipControl = false;
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
@@ -68,7 +72,6 @@ public class WeaponController : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             int idx = Mathf.Clamp((int)(easedT * 20), 0, dots.Count - 1);
-            print($"idx : {idx}, calculated : {(int)(easedT * 30)}");
             GameObject dot = dots[idx].gameObject;
             if (!dot.activeSelf)
             {
@@ -84,7 +87,7 @@ public class WeaponController : MonoBehaviour
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Debug.Log("Attack");
+                    player.Weapon.Attack(player);
                     while (delta < targetTime)
                     {
                         delta += Time.deltaTime;
@@ -102,6 +105,7 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator ReturnOriginPos()
     {
+        transform.parent = weaponParent;
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
 

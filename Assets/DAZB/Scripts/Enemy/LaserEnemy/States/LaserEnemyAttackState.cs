@@ -11,6 +11,12 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
 
     Transform playerTrm;
 
+    private float angle;
+    private Vector2 direction;
+
+    private bool isShootReady = false;
+    private Vector2 finallyShootDir;
+
     public override void Enter() {
         base.Enter();
 
@@ -18,7 +24,7 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
 
         enemy.lineRendererCompo.enabled = true;
 
-        enemy.StartCoroutine(AttackRoutine());
+        //enemy.StartCoroutine(AttackRoutine());
     }
 
     public override void Exit() {
@@ -30,13 +36,39 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
 
     public override void UpdateState() {
         base.UpdateState();
+
+        if (enemy.isDead) {
+            stateMachine.ChangeState(LaserEnemyStateEnum.Dead);
+            return;
+        }
+
+        //if (isShootReady) return;
+
+        direction = playerTrm.position - enemy.transform.position;
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        enemy.FlipController(direction.x);
+
+        Vector3 startLaserPosition = enemy.firePos.position;
+        Vector3 targetLaserPosition = playerTrm.position;
+        Vector3 smoothEndPosition = Vector3.Lerp(enemy.lineRendererCompo.GetPosition(1), targetLaserPosition, enemy.aimingSpeed * Time.deltaTime);
+
+        Vector3[] laserPositions = { startLaserPosition, smoothEndPosition };
+        enemy.lineRendererCompo.SetPositions(laserPositions);
+
+        Vector3 targetPosition = enemy.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
+        enemy.Hand.transform.position = Vector3.Lerp(enemy.Hand.transform.position, targetPosition, enemy.aimingSpeed * Time.deltaTime);
+
+        finallyShootDir = smoothEndPosition - startLaserPosition;
+        float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg;
+        enemy.Hand.transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
     }
 
     private IEnumerator AttackRoutine() {
         float elapseTime = 0;
         float targetTime = 1;
 
-        Vector2 direction = playerTrm.position - enemy.transform.position;
+        Vector2 direction = playerTrm.position - enemy.firePos.transform.position;
 
         Vector2 rotatedDirection1;
         Vector2 rotatedDirection2;
@@ -50,14 +82,14 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
             float t = easeOutCirc(elapseTime / targetTime);
             angle = Mathf.Lerp(60 , 0, t);
 
-            rotatedDirection1 = enemy.transform.position + (Vector3)Rotate(direction.normalized * 1000f, angle);
-            rotatedDirection2 = enemy.transform.position + (Vector3)Rotate(direction.normalized * 1000f, -angle);
+            rotatedDirection1 = enemy.firePos.transform.position + (Vector3)Rotate(direction.normalized * 1000f, angle);
+            rotatedDirection2 = enemy.firePos.transform.position + (Vector3)Rotate(direction.normalized * 1000f, -angle);
 
             // LineRenderer에 4개의 포인트 설정
             enemy.lineRendererCompo.positionCount = 4;
-            enemy.lineRendererCompo.SetPosition(0, enemy.transform.position);
+            enemy.lineRendererCompo.SetPosition(0, enemy.firePos.transform.position);
             enemy.lineRendererCompo.SetPosition(1, rotatedDirection1);
-            enemy.lineRendererCompo.SetPosition(2, enemy.transform.position);
+            enemy.lineRendererCompo.SetPosition(2, enemy.firePos.transform.position);
             enemy.lineRendererCompo.SetPosition(3, rotatedDirection2);
 
             elapseTime += Time.deltaTime;
@@ -69,7 +101,7 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
         targetTime = 0.1f;
 
         enemy.lineRendererCompo.positionCount = 2;
-        enemy.lineRendererCompo.SetPosition(0, enemy.transform.position);
+        enemy.lineRendererCompo.SetPosition(0, enemy.firePos.transform.position);
         enemy.lineRendererCompo.SetPosition(1, direction * 1000f);
 
         float width;

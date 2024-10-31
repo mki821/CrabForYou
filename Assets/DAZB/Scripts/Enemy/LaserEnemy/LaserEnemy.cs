@@ -10,6 +10,10 @@ public enum LaserEnemyStateEnum {
 public class LaserEnemy : Enemy {
     public EnemyStateMachine<LaserEnemyStateEnum> StateMachine;
 
+    public Transform firePos;
+    public Transform Hand;
+    public float aimingSpeed;
+
     public LineRenderer lineRendererCompo {get; private set;}
 
     protected override void Awake() {
@@ -39,11 +43,6 @@ public class LaserEnemy : Enemy {
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
-
-        // 테스트 코드
-        if (Keyboard.current.tKey.wasPressedThisFrame) {
-            StateMachine.ChangeState(LaserEnemyStateEnum.Stealth);
-        }
     }
 
     public override void Catched() {

@@ -942,6 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b576cc19acaaf234cabd315b9d05982e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponParent: {fileID: 696779913}
   firePos: {fileID: 90283331}
   dots:
   - {fileID: 540092531}
