@@ -1,18 +1,21 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Net;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class WeaponController : MonoBehaviour
 {
     public Transform firePos;
+    public List<Transform> dots = new(); 
 
     private Vector2 firstPos;
     private Vector2 targetPos;
 
     private Player player;
     private Coroutine curRoutine;
+
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator AttackToMousePos()
     {
+        (player as Entity).CanFlipControl = false;
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
         Vector2 firstPos = transform.position;
@@ -63,8 +67,32 @@ public class WeaponController : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, targetPos, easedT);
             elapsedTime += Time.deltaTime;
 
+            int idx = Mathf.Clamp((int)(easedT * 20), 0, dots.Count);
+            GameObject dot = dots[idx].gameObject;
+            print($"idx : {idx}, calculated : {(int)(easedT * 30)}");
+            if (!dot.activeSelf)
+            {
+                dot.SetActive(true);
+                dot.transform.position = Vector2.Lerp(transform.position, targetPos, easedT);
+            }
+
+
             if (Vector2.Distance(transform.position, targetPos) <= 0.1f)
             {
+                float delta = 0;
+                float targetTime = 0.1f;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Debug.Log("Attack");
+                    while (delta < targetTime)
+                    {
+                        delta += Time.deltaTime;
+                        yield return null;
+                    }
+                    delta = 0;
+                }
+
                 curRoutine = StartCoroutine(ReturnOriginPos());
                 yield break;
             }
@@ -85,12 +113,20 @@ public class WeaponController : MonoBehaviour
             float t = elapsedTime / duration;
             float easedT = EaseOutQuart(t);
 
+            foreach (Transform dot in dots)
+            {
+                if (dot.gameObject.activeSelf)
+                    dot.gameObject.SetActive(false);
+                else continue;
+            }
+
             transform.position = Vector2.Lerp(transform.position, firePos.position, easedT);
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
         transform.position = firePos.position;
+        (player as Entity).CanFlipControl = true;
         curRoutine = null;
     }
 
