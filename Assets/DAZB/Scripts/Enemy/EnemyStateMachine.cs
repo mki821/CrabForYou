@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyStateMachine<T> where T : System.Enum {
     public EnemyState<T> CurrentState {get; private set;}
@@ -8,9 +9,8 @@ public class EnemyStateMachine<T> where T : System.Enum {
 
     public void Initialize(T startState, Enemy enemy) {
         CurrentState = StateDictionary[startState];
-        CurrentState.Enter();
         this.enemy = enemy;
-        
+        CurrentState.Enter();
     }
 
     public void ChangeState(T newState) {

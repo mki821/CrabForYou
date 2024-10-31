@@ -45,6 +45,10 @@ public abstract class Enemy : Entity, IDamageable {
         return;
     }
 
+    public T CreateObject<T>(T prefab) where T : Object {
+        return Instantiate(prefab);
+    }
+
     public void ApplyDamage(int amount)
     {
         _health -= amount;
