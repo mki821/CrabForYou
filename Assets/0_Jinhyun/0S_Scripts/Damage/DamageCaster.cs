@@ -31,11 +31,11 @@ public class DamageCaster : MonoBehaviour
 
         foreach (Collider2D col in cols)
         {
-            //if (col.TryGetComponent(out IDamageable target))
-            //{
-            //    Debug.Log($"{col.gameObject.name} hit");
-            //    target.ApplyDamage(damage, transform);
-            //}
+            if (col.TryGetComponent(out IDamageable target))
+            {
+                Debug.Log($"{col.gameObject.name} hit");
+                target.ApplyDamage(damage);
+            }
         }
     }
     void CastCircle(int damage, Vector2 position, float radius)
@@ -44,11 +44,11 @@ public class DamageCaster : MonoBehaviour
 
         foreach (Collider2D col in cols)
         {
-            //if (col.TryGetComponent(out IDamageable target))
-            //{
-            //    Debug.Log($"{col.gameObject.name} hit");
-            //    target.ApplyDamage(damage, transform);
-            //}
+            if (col.TryGetComponent(out IDamageable target))
+            {
+                Debug.Log($"{col.gameObject.name} hit");
+                target.ApplyDamage(damage);
+            }
         }
     }
 }

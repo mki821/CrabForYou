@@ -5,12 +5,12 @@ public enum PlayerStateEnum {
     Idle = 0, Move, Jump, Fall, Rope, Attack, Dead
 }
 
-public class Player : Entity
+public class Player : Entity, IDamageable
 {
     [SerializeField] private InputReader _inputReader;
 
     [field: SerializeField] public PlayerStat Stat { get; private set; }
-
+    private int _health;
     #region Settings
 
     [Header("Default Settings")]
@@ -34,6 +34,7 @@ public class Player : Entity
 
         //KJH code maybe conflict just merge
         Weapon = transform.Find("Weapon").GetComponent<Weapon>();
+        _health = (int)Stat.maxHealth.GetValue();
 
         Rope = GetComponent<PlayerRope>();
         Rope.Initialize(this);
@@ -80,5 +81,17 @@ public class Player : Entity
     public void ChangeWeapon(Weapon weapon)
     {
         Weapon = weapon;
+    }
+
+    public void ApplyDamage(int amount)
+    {
+        return;
+    }
+
+    public void ApplyDamage()
+    {
+        _health--;
+        if (_health <= 0) 
+            StateMachine.ChangeState(PlayerStateEnum.Dead);
     }
 }
