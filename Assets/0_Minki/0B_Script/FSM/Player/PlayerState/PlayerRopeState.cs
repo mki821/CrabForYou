@@ -17,6 +17,7 @@ public class PlayerRopeState : PlayerState
         base.Enter();
         
         _player.Input.RopeCancelEvent += RopeCancel;
+        _player.Input.JumpEvent += Acceleration;
 
         _rigidbody = _player.RigidbodyCompo;
         _originGravityScale = _rigidbody.gravityScale;
@@ -56,7 +57,7 @@ public class PlayerRopeState : PlayerState
         velocity.Normalize();
 
         _currentRopeVelocity += -Mathf.Sign(velocity.y) * _anchorDistance * 2.5f * Time.deltaTime;
-        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -15f, 15f);
+        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -25f, 25f);
 
         velocity *= _currentRopeVelocity;
 
@@ -65,6 +66,7 @@ public class PlayerRopeState : PlayerState
 
     public override void Exit() {
         _player.Input.RopeCancelEvent -= RopeCancel;
+        _player.Input.JumpEvent -= Acceleration;
 
         _rigidbody.gravityScale = _originGravityScale;
 
@@ -72,4 +74,9 @@ public class PlayerRopeState : PlayerState
     }
 
     private void RopeCancel() => _player.StateMachine.ChangeState(PlayerStateEnum.Fall);
+
+    private void Acceleration() {
+        _currentRopeVelocity += 5f;
+        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -25f, 25f);
+    }
 }

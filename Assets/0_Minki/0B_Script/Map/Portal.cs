@@ -15,10 +15,12 @@ public class Portal : MonoBehaviour
 
     public void Open() {
         _isOpened = true;
+        gameObject.SetActive(true);
     }
 
     public void Close() {
         _isOpened = false;
+        gameObject.SetActive(false);
     }
 
     public void Use(Transform trm) {

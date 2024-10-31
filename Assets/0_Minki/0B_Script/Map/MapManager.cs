@@ -104,7 +104,7 @@ public class MapManager : MonoSingleton<MapManager>
                     _maps[i, j - 1].rightPortal.connectedPortal = _maps[i, j].leftPortal;
                 }
 
-                _maps[i, j].OpenPortal(openDirection);
+                _maps[i, j].ActovePortal(openDirection);
             }
         }
     }
