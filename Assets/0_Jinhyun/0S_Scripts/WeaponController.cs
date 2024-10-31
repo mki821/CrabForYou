@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
+    public Transform weaponParent;
+
     public Transform firePos;
     public List<Transform> dots = new(); 
 
@@ -43,6 +45,7 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator AttackToMousePos()
     {
+        transform.parent = null;
         (player as Entity).CanFlipControl = false;
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
@@ -102,6 +105,7 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator ReturnOriginPos()
     {
+        transform.parent = weaponParent;
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
 
