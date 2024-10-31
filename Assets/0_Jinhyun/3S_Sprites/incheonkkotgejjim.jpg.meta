@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f5c0eaac6bf45194aa30584ad72f465d
+guid: 6d1b6b4d4addca44ba2e1dc9767785c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3841842420923533991
-    second: 209_2_0
+      213: -1404704054391832488
+    second: incheonkkotgejjim_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 700
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,30 +109,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 209_2_0
+      name: incheonkkotgejjim_0
       rect:
         serializedVersion: 2
-        x: 81
-        y: 20
-        width: 583
-        height: 1063
+        x: 0
+        y: 0
+        width: 1936
+        height: 1296
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7aa8c2ea357f05530800000000000000
-      internalID: 3841842420923533991
+      spriteID: 8508c6fda1d718ce0800000000000000
+      internalID: -1404704054391832488
       vertices: []
       indices: 
       edges: []
@@ -160,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      209_2_0: 3841842420923533991
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
