@@ -46,6 +46,10 @@ public class LaserEnemy : Enemy {
         }
     }
 
+    public override void Catched() {
+        StateMachine.ChangeState(LaserEnemyStateEnum.Catched);
+    }
+
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public override void Attack() => StateMachine.CurrentState.AnimationAttackTrigger();
 }

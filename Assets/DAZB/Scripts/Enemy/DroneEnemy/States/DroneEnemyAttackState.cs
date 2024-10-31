@@ -8,6 +8,8 @@ public class DroneEnemyAttackState : EnemyState<DroneEnemyStateEnum> {
 
     private Transform playerTrm;
 
+    private Coroutine coroutine;
+
     public override void Enter() {
         base.Enter();
 
@@ -15,11 +17,13 @@ public class DroneEnemyAttackState : EnemyState<DroneEnemyStateEnum> {
 
         enemy.StopImmediately(true);
     
-        enemy.StartCoroutine(DashRoutine());
+        coroutine = enemy.StartCoroutine(DashRoutine());
     }
 
     public override void Exit() {
         enemy.lastAttackTime = Time.time;
+
+        enemy.StopCoroutine(coroutine);
 
         base.Exit();
     }

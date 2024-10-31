@@ -34,6 +34,10 @@ public class DashEnemy : Enemy {
         StateMachine.CurrentState.UpdateState();
     }
 
+    public override void Catched() {
+        StateMachine.ChangeState(DashEnemyStateEnum.Catched);
+    }
+
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public override void Attack() => StateMachine.CurrentState.AnimationAttackTrigger();
 }

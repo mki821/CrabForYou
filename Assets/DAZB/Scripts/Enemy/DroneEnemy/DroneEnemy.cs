@@ -37,4 +37,7 @@ public class DroneEnemy : Enemy {
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public override void Attack() => StateMachine.CurrentState.AnimationAttackTrigger();
 
+    public override void Catched() {
+        StateMachine.ChangeState(DroneEnemyStateEnum.Catched);
+    }
 }

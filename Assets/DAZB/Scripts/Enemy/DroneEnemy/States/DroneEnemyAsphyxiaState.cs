@@ -8,6 +8,8 @@ public class DroneEnemyAsphyxiaState : EnemyState<DroneEnemyStateEnum> {
     public override void Enter() {
         base.Enter();
 
+        enemy.StopImmediately(true);
+
         enemy.StartDelayCallback(1, () => stateMachine.ChangeState(DroneEnemyStateEnum.Battle));
     }
 }

@@ -56,6 +56,7 @@ public class PlayerRope : MonoBehaviour
             }
             else if(hit.collider.TryGetComponent(out Enemy enemy)) {
                 targetEnemy = enemy;
+                targetEnemy.Catched();
             }
         }
     }
@@ -64,6 +65,8 @@ public class PlayerRope : MonoBehaviour
         _isGrab = false;
         _lineRenderer.SetPosition(0, Vector2.zero);
         _lineRenderer.SetPosition(1, Vector2.zero);
+
+        targetEnemy.isCatchCanceled = true;
     }
 
     private void OnDrawGizmos() {

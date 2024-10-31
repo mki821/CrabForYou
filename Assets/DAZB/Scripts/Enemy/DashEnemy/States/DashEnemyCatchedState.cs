@@ -8,8 +8,13 @@ public class DashEnemyCatchedState : EnemyState<DashEnemyStateEnum> {
     public override void UpdateState() {
         base.UpdateState();
 
-    /* if (조건) {
+        if (enemy.isCatchCanceled == true) {
             stateMachine.ChangeState(DashEnemyStateEnum.Attack);
-        } */
+        }
+    }
+
+    public override void Exit() {
+        enemy.isCatchCanceled = false;
+        base.Exit();
     }
 }

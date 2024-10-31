@@ -76,4 +76,8 @@ public class RangeEnemy : Enemy {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube((Vector2)transform.position + playerCheckOffset, playerCheckRange);
     }
+
+    public override void Catched() {
+        StateMachine.ChangeState(RangeEnemyStateEnum.Catched);
+    }
 }

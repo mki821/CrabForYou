@@ -13,6 +13,8 @@ public abstract class Enemy : Entity {
     public Vector2 canAttackRange;
     public Vector2 canAttackCheckOffset;
 
+    [HideInInspector] public bool isCatchCanceled;
+
     public abstract void AnimationFinishTrigger();
     public abstract void Attack();
 
@@ -34,4 +36,6 @@ public abstract class Enemy : Entity {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube((Vector2)transform.position + canAttackCheckOffset * FacingDirection, canAttackRange);
     }
+
+    public abstract void Catched();
 }
