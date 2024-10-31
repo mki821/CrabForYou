@@ -29,7 +29,7 @@ public abstract class Enemy : Entity {
         return lastAttackTime + attackCooldown <= Time.time;
     }
 
-    private void OnDrawGizmos() {
+    protected virtual void OnDrawGizmos() {
         // Can Attack Range;
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube((Vector2)transform.position + canAttackCheckOffset * FacingDirection, canAttackRange);
