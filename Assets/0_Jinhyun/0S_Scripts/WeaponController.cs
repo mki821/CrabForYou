@@ -34,11 +34,11 @@ public class WeaponController : MonoBehaviour
 
     public void Move()
     {
-        print("¤±¤¤¤·¤©");
+        print("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         if (curRoutine != null)
             return;
         curRoutine = StartCoroutine(AttackToMousePos());
-        print("¤±¤¤¤·¤©2");
+        print("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2");
     }
 
     private IEnumerator AttackToMousePos()
@@ -47,7 +47,7 @@ public class WeaponController : MonoBehaviour
         float atkRange = player.Stat.attackRange.GetValue();
         float atkSpeed = player.Stat.attackSpeed.GetValue();
         Vector2 firstPos = transform.position;
-        Vector2 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 targetPos = player.Input.MouseWorldPos;
         Vector2 moveDir = (targetPos - (Vector2)transform.position).normalized;
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg - 90);
 
@@ -67,9 +67,9 @@ public class WeaponController : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, targetPos, easedT);
             elapsedTime += Time.deltaTime;
 
-            int idx = Mathf.Clamp((int)(easedT * 20), 0, dots.Count);
-            GameObject dot = dots[idx].gameObject;
+            int idx = Mathf.Clamp((int)(easedT * 20), 0, dots.Count - 1);
             print($"idx : {idx}, calculated : {(int)(easedT * 30)}");
+            GameObject dot = dots[idx].gameObject;
             if (!dot.activeSelf)
             {
                 dot.SetActive(true);

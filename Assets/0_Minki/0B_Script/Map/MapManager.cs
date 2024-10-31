@@ -14,6 +14,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     [SerializeField] private InputReader _inputReader;
 
+    private int _roomCount = 0;
     private Vector2Int _playerPosition;
 
     private Map[,] _maps;
@@ -32,7 +33,14 @@ public class MapManager : MonoSingleton<MapManager>
     }
 
     private void Start() {
+        _roomCount = 0;
         Generate(new Vector2Int(_mapMaxSize.x / 2, _mapMaxSize.y / 2));
+
+        if(_roomCount == 0) {
+            _roomCount = 0;
+            Generate(new Vector2Int(_mapMaxSize.x / 2, _mapMaxSize.y / 2));
+        }
+
         CorrectAllMap();
         SetUI();
 
@@ -51,8 +59,9 @@ public class MapManager : MonoSingleton<MapManager>
         _mapGenerated[position.y, position.x] = true;
 
         Map randomMap = _mapPrefabs[Random.Range(0, _mapPrefabs.Count)];
-        Map generatedMap = Instantiate(randomMap, new Vector2(position.x * _mapOffset.x, position.y * _mapOffset.y), Quaternion.identity);
+        Map generatedMap = Instantiate(randomMap, new Vector2((position.x - 2) * _mapOffset.x, (position.y - 2) * _mapOffset.y), Quaternion.identity);
         generatedMap.mapPosition = position;
+        ++_roomCount;
 
         _maps[position.y, position.x] = generatedMap;
 
