@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapGenerator : MonoBehaviour
+public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField] private List<Map> _mapPrefabs;
 
@@ -10,20 +10,39 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Vector2Int _mapMaxSize;
 
     [SerializeField] private Transform _minimapTrm;
-    [SerializeField] private Image _mapUI;
+    [SerializeField] private Image _mapUIPrefab;
+
+    [SerializeField] private InputReader _inputReader;
+
+    private Vector2Int _playerPosition;
 
     private Map[,] _maps;
     private bool[,] _mapGenerated;
+    private Image[,] _mapUI;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
+
         _mapGenerated = new bool[_mapMaxSize.y, _mapMaxSize.x];
         _maps = new Map[_mapMaxSize.y, _mapMaxSize.x];
+        _mapUI = new Image[_mapMaxSize.y, _mapMaxSize.x];
+
+        _inputReader.MinimapEvent += OpenMinimap;
+        _inputReader.MinimapCancelEvent += CloseMinimap;
     }
 
     private void Start() {
         Generate(new Vector2Int(_mapMaxSize.x / 2, _mapMaxSize.y / 2));
         CorrectAllMap();
         SetUI();
+
+        _playerPosition = new Vector2Int(_mapMaxSize.x / 2, _mapMaxSize.y / 2);
+        SetPlayerPosition(new Vector2Int(_mapMaxSize.x / 2, _mapMaxSize.y / 2));
+    }
+
+    private void OnDisable() {
+        _inputReader.MinimapEvent -= OpenMinimap;
+        _inputReader.MinimapCancelEvent -= CloseMinimap;
     }
 
     public void Generate(Vector2Int position) {
@@ -33,6 +52,7 @@ public class MapGenerator : MonoBehaviour
 
         Map randomMap = _mapPrefabs[Random.Range(0, _mapPrefabs.Count)];
         Map generatedMap = Instantiate(randomMap, new Vector2(position.x * _mapOffset.x, position.y * _mapOffset.y), Quaternion.identity);
+        generatedMap.mapPosition = position;
 
         _maps[position.y, position.x] = generatedMap;
 
@@ -85,13 +105,23 @@ public class MapGenerator : MonoBehaviour
             for(int j = 0; j < _mapMaxSize.x; ++j) {
                 if(_maps[i, j] == null) continue;
 
-                Image img = Instantiate(_mapUI, _minimapTrm);
+                Image img = Instantiate(_mapUIPrefab, _minimapTrm);
+                _mapUI[i, j] = img;
 
                 Vector2 position = new Vector2((j - 2) * 220, (i - 2) * 220);
                 img.rectTransform.localPosition = position;
             }
         }
     }
+
+    public void SetPlayerPosition(Vector2Int position) {
+        _mapUI[_playerPosition.y, _playerPosition.x].color = Color.white;
+        _playerPosition = position;
+        _mapUI[_playerPosition.y, _playerPosition.x].color = Color.cyan;
+    }
+
+    private void OpenMinimap() => _minimapTrm.gameObject.SetActive(true);
+    private void CloseMinimap() => _minimapTrm.gameObject.SetActive(false);
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;

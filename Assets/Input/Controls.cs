@@ -80,6 +80,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Minimap"",
+                    ""type"": ""Button"",
+                    ""id"": ""8670fa1c-6da3-49da-8b18-122476c49aed"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +179,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3e00a8f-6845-48b6-8d1c-b0e317cb706c"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Minimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -245,6 +265,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Rope = m_Player.FindAction("Rope", throwIfNotFound: true);
         m_Player_Up = m_Player.FindAction("Up", throwIfNotFound: true);
         m_Player_MousePos = m_Player.FindAction("MousePos", throwIfNotFound: true);
+        m_Player_Minimap = m_Player.FindAction("Minimap", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -317,6 +338,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Rope;
     private readonly InputAction m_Player_Up;
     private readonly InputAction m_Player_MousePos;
+    private readonly InputAction m_Player_Minimap;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -327,6 +349,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Rope => m_Wrapper.m_Player_Rope;
         public InputAction @Up => m_Wrapper.m_Player_Up;
         public InputAction @MousePos => m_Wrapper.m_Player_MousePos;
+        public InputAction @Minimap => m_Wrapper.m_Player_Minimap;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -354,6 +377,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
+            @Minimap.started += instance.OnMinimap;
+            @Minimap.performed += instance.OnMinimap;
+            @Minimap.canceled += instance.OnMinimap;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -376,6 +402,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
+            @Minimap.started -= instance.OnMinimap;
+            @Minimap.performed -= instance.OnMinimap;
+            @Minimap.canceled -= instance.OnMinimap;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -446,5 +475,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnRope(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
+        void OnMinimap(InputAction.CallbackContext context);
     }
 }
