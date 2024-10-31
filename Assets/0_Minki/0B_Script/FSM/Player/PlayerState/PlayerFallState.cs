@@ -5,6 +5,7 @@ public class PlayerFallState : PlayerState
     public PlayerFallState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName) { }
 
     private bool _isInterference;
+    private int _enterDir;
 
     private Rigidbody2D _rigidbody;
 
@@ -12,6 +13,7 @@ public class PlayerFallState : PlayerState
         base.Enter();
         
         _rigidbody = _player.RigidbodyCompo;
+        _enterDir = (int)Mathf.Sign(_rigidbody.linearVelocityX);
         _isInterference = false;
     }
 
@@ -20,11 +22,12 @@ public class PlayerFallState : PlayerState
         
         float xInput = _player.Input.Movement.x;
 
-        if(Mathf.Abs(xInput) > 0.05f)
-            if(!_isInterference) _isInterference = true;
+        if(Mathf.Abs(xInput) > 0.05f) {
+            if(!_isInterference && xInput != _enterDir) _isInterference = true;
+        }
 
         if(_isInterference)
-            _player.SetVelocity(xInput * _player.moveSpeed, _rigidbody.linearVelocityY);
+            _player.SetVelocity(xInput * _player.Stat.MoveSpeed * 0.7f, _rigidbody.linearVelocityY);
 
         if(_player.IsDetecteGround()) {
             if(Mathf.Abs(xInput) > 0.05f) _stateMachine.ChangeState(PlayerStateEnum.Move);

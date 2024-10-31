@@ -7,7 +7,7 @@ public class PlayerMoveState : PlayerGroundState
     public override void UpdateState() {
         float xInput = _player.Input.Movement.x;
 
-        _player.SetVelocity(xInput * _player.moveSpeed, _player.RigidbodyCompo.linearVelocityY);
+        _player.SetVelocity(xInput * _player.Stat.MoveSpeed, _player.RigidbodyCompo.linearVelocityY);
 
         if(Mathf.Abs(xInput) < 0.05f) {
             _stateMachine.ChangeState(PlayerStateEnum.Idle);

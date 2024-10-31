@@ -11,7 +11,7 @@ public class PlayerJumpState : PlayerState
 
         _rigidbody = _player.RigidbodyCompo;
 
-        _player.SetVelocity(_rigidbody.linearVelocityX, _player.jumpForce);
+        _player.SetVelocity(_rigidbody.linearVelocityX, _player.Stat.JumpForce);
     }
 
     public override void UpdateState() {
@@ -22,6 +22,6 @@ public class PlayerJumpState : PlayerState
 
         float xInput = _player.Input.Movement.x;
 
-        _player.SetVelocity(xInput * _player.moveSpeed, _rigidbody.linearVelocityY);
+        _player.SetVelocity(xInput * _player.Stat.MoveSpeed, _rigidbody.linearVelocityY);
     }
 }
