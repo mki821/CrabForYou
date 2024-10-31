@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action AttackEvent;
     public event Action RopeEvent;
     public event Action RopeCancelEvent;
+    public event Action UpEvent;
 
     public Vector2 Movement { get; private set; }
     public Vector2 MouseScreenPos { get; private set; }
@@ -50,6 +51,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnRope(InputAction.CallbackContext context) {
         if(context.performed) RopeEvent?.Invoke();
         else if(context.canceled) RopeCancelEvent?.Invoke();
+    }
+
+    public void OnUp(InputAction.CallbackContext context) {
+        if(context.performed) UpEvent?.Invoke();
     }
 
     public void OnMousePos(InputAction.CallbackContext context) {

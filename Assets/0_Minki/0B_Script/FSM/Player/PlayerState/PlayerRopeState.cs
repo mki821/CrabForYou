@@ -24,7 +24,7 @@ public class PlayerRopeState : PlayerState
 
         _anchorPosition = _player.Rope.anchorPosition;
 
-        _currentRopeVelocity = 13f;
+        _currentRopeVelocity = 15f;
 
         Vector2 direction = (Vector2)_player.transform.position - _anchorPosition;
         _anchorDistance = direction.magnitude;
@@ -46,7 +46,7 @@ public class PlayerRopeState : PlayerState
 
         _player.transform.position = _anchorPosition + currentPosition;
         
-        _currentAngle += _facingDirection * Time.deltaTime * 180f;
+        _currentAngle += _facingDirection * _anchorDistance * Time.deltaTime * 60f;
         _currentAngle %= 360;
 
         delta = _currentAngle * Mathf.Deg2Rad;
@@ -56,7 +56,7 @@ public class PlayerRopeState : PlayerState
         velocity.Normalize();
 
         _currentRopeVelocity += -Mathf.Sign(velocity.y) * _anchorDistance * 2.5f * Time.deltaTime;
-        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -13f, 13f);
+        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -15f, 15f);
 
         velocity *= _currentRopeVelocity;
 
