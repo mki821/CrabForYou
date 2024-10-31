@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum PlayerStateEnum {
     Idle = 0, Move, Jump, Fall, Rope, Attack, Dead
@@ -27,6 +28,7 @@ public class Player : Entity, IDamageable
     public PlayerRope Rope { get; private set; }
     public Weapon Weapon { get; private set; }
     private HealthUI _healthUI;
+    private PlayerJumpScare _jumpScare;
     
     protected override void Awake() {
         base.Awake();
@@ -45,6 +47,8 @@ public class Player : Entity, IDamageable
 
         _healthUI = GetComponent<HealthUI>();
         _healthUI.Init((int)Stat.MaxHealth);
+
+        _jumpScare = GetComponent<PlayerJumpScare>();
 
         StateMachine = new PlayerStateMachine();
 
@@ -70,6 +74,8 @@ public class Player : Entity, IDamageable
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
+
+        if(Keyboard.current.pKey.wasPressedThisFrame) ApplyDamage();
     }
 
     public bool IsDetecteGround() {
@@ -97,6 +103,7 @@ public class Player : Entity, IDamageable
     {
         _health--;
         _healthUI.Damaged();
+        _jumpScare.Bomb();
         if (_health <= 0) 
             StateMachine.ChangeState(PlayerStateEnum.Dead);
     }

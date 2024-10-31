@@ -126,6 +126,28 @@ public class PlayerRope : MonoBehaviour
         
         _isGrab = true;
         targetEnemy.Catched();
+
+        startPosition = _grabTrm.position;
+        timer = 0f;
+
+        while(timer < 1f) {
+            timer += Time.deltaTime * 0.5f;
+
+            Vector2 currentPosition = Vector2.Lerp(startPosition, (Vector2)transform.position + _originPosition, timer);
+            _grabTrm.position = currentPosition;
+            targetEnemy.transform.position = currentPosition;
+
+            if(!_isGrab) {
+                Coroutine tempCoroutine = _coroutine;
+                _coroutine = StartCoroutine(ComeBackCoroutine());
+                StopCoroutine(tempCoroutine);
+            }
+
+            yield return null;
+        }
+        _grabTrm.SetParent(transform);
+        _grabTrm.localPosition = _originPosition;
+        _grabTrm.localRotation = Quaternion.identity;
     }
 
     private void RopeCancel() {
