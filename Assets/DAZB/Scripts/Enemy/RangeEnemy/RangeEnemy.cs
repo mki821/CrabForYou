@@ -20,6 +20,8 @@ public class RangeEnemy : Enemy {
     public float shootPower;
     public float escapeCooldown;
 
+    public Transform body;
+
     public LineRenderer lineRendererCompo {get; private set;}
 
     [HideInInspector] public float lastEscapeTime;

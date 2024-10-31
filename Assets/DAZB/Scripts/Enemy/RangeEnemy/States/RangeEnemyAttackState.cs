@@ -55,7 +55,7 @@ public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
 
         if (isShootReady) return;
 
-        direction = playerTrm.position - enemy.transform.position;
+        direction = playerTrm.position - enemy.body.transform.position;
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         enemy.FlipController(direction.x);
@@ -67,11 +67,11 @@ public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
         Vector3[] laserPositions = { startLaserPosition, smoothEndPosition };
         enemy.lineRendererCompo.SetPositions(laserPositions);
 
-        Vector3 targetPosition = enemy.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
+        Vector3 targetPosition = enemy.body.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
         enemy.Hand.transform.position = Vector3.Lerp(enemy.Hand.transform.position, targetPosition, enemy.aimingSpeed * Time.deltaTime);
 
         finallyShootDir = smoothEndPosition - startLaserPosition;
-        float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg;
+        float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg + 140;
         enemy.Hand.transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
     }
 

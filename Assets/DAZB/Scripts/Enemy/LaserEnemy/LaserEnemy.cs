@@ -12,6 +12,7 @@ public class LaserEnemy : Enemy {
 
     public Transform firePos;
     public Transform Hand;
+    public Transform body;
     public float aimingSpeed;
 
     public LineRenderer lineRendererCompo {get; private set;}
