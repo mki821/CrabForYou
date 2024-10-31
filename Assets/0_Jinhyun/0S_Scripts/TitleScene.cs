@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEditor.Search;
 
 public class TitleScene : MonoBehaviour
 {
@@ -28,5 +29,7 @@ public class TitleScene : MonoBehaviour
         seq.AppendInterval(0.2f);
         seq.Append(_rightHand.transform.DOMove(new Vector2(5.28f, 4.53f), 1.5f).SetEase(Ease.Linear));
         seq.Join(_rightHand.transform.DORotate(Vector3.zero, 0.8f));
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() => SceneManager.LoadScene(1));
     }
 }
