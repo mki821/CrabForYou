@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ad11999b99908fd4981dcc4f28ab725f
+guid: 3f1d4b463eb7f15419cdc444d055b8d7
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 2168553047955329170
-    second: "\uBA38\uB9AC_0"
+    second: X
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uBA38\uB9AC_0"
+      name: 
       rect:
         serializedVersion: 2
         x: 0
