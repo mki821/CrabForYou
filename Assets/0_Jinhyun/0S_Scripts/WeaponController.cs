@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
+        weaponParent = transform.parent;
         player = transform.parent.GetComponent<Player>();
     }
 
@@ -71,7 +72,6 @@ public class WeaponController : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             int idx = Mathf.Clamp((int)(easedT * 20), 0, dots.Count - 1);
-            print($"idx : {idx}, calculated : {(int)(easedT * 30)}");
             GameObject dot = dots[idx].gameObject;
             if (!dot.activeSelf)
             {
