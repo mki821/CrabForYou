@@ -1311,7 +1311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPosition: {x: 0, y: 0}
-  _ropeDistance: 5
+  targetEnemy: {fileID: 0}
+  _ropeDistance: 10
   _ropeSpeed: 3
   _whatIsRopeable:
     serializedVersion: 2

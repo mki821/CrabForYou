@@ -23,7 +23,8 @@ public class PlayerRopeState : PlayerState
         _rigidbody.gravityScale = 0f;
 
         _anchorPosition = _player.Rope.anchorPosition;
-        _currentRopeVelocity = _rigidbody.linearVelocityY;
+
+        _currentRopeVelocity = 13f;
 
         Vector2 direction = (Vector2)_player.transform.position - _anchorPosition;
         _anchorDistance = direction.magnitude;
@@ -37,45 +38,32 @@ public class PlayerRopeState : PlayerState
     public override void UpdateState() {
         Vector2 direction = (Vector2)_player.transform.position - _anchorPosition;
         direction.Normalize();
+
         _currentAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         float delta = _currentAngle * Mathf.Deg2Rad;
         Vector2 currentPosition = new Vector2(Mathf.Cos(delta), Mathf.Sin(delta)) * _anchorDistance;
-        
-        _currentAngle += _facingDirection * _currentRopeVelocity * 18f * Time.deltaTime;
-        _currentAngle %= 360f;
 
-        delta = _currentAngle * Mathf.Deg2Rad;
-        Vector2 nextPosition = new Vector2(Mathf.Cos(delta), Mathf.Sin(delta)) * _anchorDistance;
-
-        Vector2 velocity = nextPosition - currentPosition;
-        _currentRopeVelocity += -Mathf.Sign(velocity.y) * _anchorDistance * 2.5f * Time.deltaTime;
-        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -10f, 10f);
-
-        _player.transform.position = _anchorPosition + nextPosition;
-    }
-
-    public override void Exit() {
-
-        float delta = _currentAngle * Mathf.Deg2Rad;
-        Vector2 currentPosition = new Vector2(Mathf.Cos(delta), Mathf.Sin(delta)) * _anchorDistance;
+        _player.transform.position = _anchorPosition + currentPosition;
         
         _currentAngle += _facingDirection * Time.deltaTime * 180f;
         _currentAngle %= 360;
 
         delta = _currentAngle * Mathf.Deg2Rad;
         Vector2 nextPosition = new Vector2(Mathf.Cos(delta), Mathf.Sin(delta)) * _anchorDistance;
-
+        
         Vector2 velocity = nextPosition - currentPosition;
         velocity.Normalize();
 
         _currentRopeVelocity += -Mathf.Sign(velocity.y) * _anchorDistance * 2.5f * Time.deltaTime;
-        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -10f, 10f);
+        _currentRopeVelocity = Mathf.Clamp(_currentRopeVelocity, -13f, 13f);
 
         velocity *= _currentRopeVelocity;
 
         _player.SetVelocity(velocity.x, velocity.y, true);
-        
+    }
+
+    public override void Exit() {
         _player.Input.RopeCancelEvent -= RopeCancel;
 
         _rigidbody.gravityScale = _originGravityScale;

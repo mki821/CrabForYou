@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerRope : MonoBehaviour
 {
     public Vector2 anchorPosition;
-    // public Enemy targetEnemy;
+    public Enemy targetEnemy;
     
     [SerializeField] private float _ropeDistance;
     [SerializeField] private float _ropeSpeed = 2f;
@@ -54,9 +54,9 @@ public class PlayerRope : MonoBehaviour
                 
                 _player.StateMachine.ChangeState(PlayerStateEnum.Rope);
             }
-            // else if(hit.collider.TryGetComponent(out Enemy enemy)) {
-                // targetEnemy = enemy;
-            // }
+            else if(hit.collider.TryGetComponent(out Enemy enemy)) {
+                targetEnemy = enemy;
+            }
         }
     }
 
