@@ -87,6 +87,7 @@ public class WeaponController : MonoBehaviour
 
                 for (int i = 0; i < 3; i++)
                 {
+                    //SoundManager.Instance.PlayOneShot("DRILLWIING.wav");
                     player.Weapon.Attack(player);
                     while (delta < targetTime)
                     {
