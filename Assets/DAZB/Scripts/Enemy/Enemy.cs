@@ -1,9 +1,11 @@
+using System.Net.Http.Headers;
 using UnityEngine;
 
-public abstract class Enemy : Entity {
+public abstract class Enemy : Entity, IDamageable {
     public LayerMask whatIsPlayer;
 
     public float moveSpeed;
+
 
     [Header("Attack Setting")]
     public float attackCooldown;
@@ -13,6 +15,7 @@ public abstract class Enemy : Entity {
     public Vector2 canAttackRange;
     public Vector2 canAttackCheckOffset;
 
+    [SerializeField] private int _health;
     [HideInInspector] public bool isCatchCanceled;
 
     public abstract void AnimationFinishTrigger();
@@ -37,5 +40,14 @@ public abstract class Enemy : Entity {
         Gizmos.DrawWireCube((Vector2)transform.position + canAttackCheckOffset * FacingDirection, canAttackRange);
     }
 
+    public void ApplyDamage()
+    {
+        return;
+    }
+
+    public void ApplyDamage(int amount)
+    {
+        _health -= amount;
+    }
     public abstract void Catched();
 }
