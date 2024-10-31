@@ -19,7 +19,7 @@ MonoBehaviour:
     _baseValue: 5
     modifiers: []
   jumpForce:
-    _baseValue: 6
+    _baseValue: 8
     modifiers: []
   attack:
     _baseValue: 5
