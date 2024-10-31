@@ -11,6 +11,15 @@ public class Map : MonoBehaviour
     public Portal rightPortal;
     public Portal leftPortal;
 
+    public Vector2Int mapPosition;
+
+    private void Awake() {
+        upPortal.Init(this);
+        downPortal.Init(this);
+        rightPortal.Init(this);
+        leftPortal.Init(this);
+    }
+
     public int GenerateRandom() {
         int direction = 0;
 
