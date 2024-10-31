@@ -116,6 +116,8 @@ public class MapManager : MonoSingleton<MapManager>
 
                 Image img = Instantiate(_mapUIPrefab, _minimapTrm);
                 _mapUI[i, j] = img;
+                
+                Instantiate(_maps[i, j].icon, img.transform);
 
                 Vector2 position = new Vector2((j - 2) * 220, (i - 2) * 220);
                 img.rectTransform.localPosition = position;

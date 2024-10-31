@@ -11,6 +11,8 @@ public class Map : MonoBehaviour
     public Portal rightPortal;
     public Portal leftPortal;
 
+    public GameObject icon;
+
     public Vector2Int mapPosition;
 
     private void Awake() {
