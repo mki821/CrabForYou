@@ -87,7 +87,7 @@ public class WeaponController : MonoBehaviour
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Debug.Log("Attack");
+                    player.Weapon.Attack(player);
                     while (delta < targetTime)
                     {
                         delta += Time.deltaTime;
