@@ -9,13 +9,7 @@ public class Player : Entity
 {
     [SerializeField] private InputReader _inputReader;
 
-    #region Stat
-
-    [Header("Player Stat")]
-    public float moveSpeed = 5f;
-    public float jumpForce = 3f;
-
-    #endregion
+    [field: SerializeField] public PlayerStat Stat { get; private set; }
 
     #region Settings
 
@@ -28,12 +22,17 @@ public class Player : Entity
 
     public PlayerStateMachine StateMachine { get; private set; }
     public InputReader Input => _inputReader;
+
+    public PlayerRope Rope { get; private set; }
     
     protected override void Awake() {
         base.Awake();
 
         PlayerManager.Instance.Player = this;
         PlayerManager.Instance.PlayerTrm = transform;
+
+        Rope = GetComponent<PlayerRope>();
+        Rope.Initialize(this);
 
         StateMachine = new PlayerStateMachine();
 

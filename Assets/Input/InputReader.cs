@@ -8,8 +8,17 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action JumpEvent;
     public event Action AttackEvent;
     public event Action RopeEvent;
+    public event Action RopeCancelEvent;
 
     public Vector2 Movement { get; private set; }
+    public Vector2 MouseScreenPos { get; private set; }
+    public Vector2 MouseWorldPos {
+        get {
+            Vector3 screenPos = MouseScreenPos;
+            screenPos.z = 10f;
+            return Camera.main.ScreenToWorldPoint(screenPos);
+        }
+    }
     
     private Controls _controls;
 
@@ -40,5 +49,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public void OnRope(InputAction.CallbackContext context) {
         if(context.performed) RopeEvent?.Invoke();
+        else if(context.canceled) RopeCancelEvent?.Invoke();
+    }
+
+    public void OnMousePos(InputAction.CallbackContext context) {
+        MouseScreenPos = context.ReadValue<Vector2>();
     }
 }
