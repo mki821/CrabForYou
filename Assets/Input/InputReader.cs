@@ -10,6 +10,21 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action RopeEvent;
 
     public Vector2 Movement { get; private set; }
+    
+    private Controls _controls;
+
+    private void OnEnable() {
+        if(_controls == null) {
+            _controls = new Controls();
+            _controls.Player.SetCallbacks(this);
+        }
+
+        _controls.Player.Enable();
+    }
+
+    private void OnDisable() {
+        _controls.Player.Disable();
+    }
 
     public void OnMove(InputAction.CallbackContext context) {
         Movement = context.ReadValue<Vector2>();
