@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b788e8eb9f7c3374384c228e56f3f7ab
+guid: df59414be4097344ab722833344e97c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4053014912106633160
-    second: 211_4_0
+      213: -8107194921590940543
+    second: 211_10_0
+  - first:
+      213: -4504989994156560585
+    second: 211_10_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 211_4_0
+      name: 211_10_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1298
         y: 0
-        width: 5120
-        height: 1895
+        width: 1729
+        height: 1551
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +144,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c71a79b6933f3830800000000000000
-      internalID: 4053014912106633160
+      spriteID: 18c98bd2c257d7f80800000000000000
+      internalID: -8107194921590940543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 211_10_1
+      rect:
+        serializedVersion: 2
+        x: 5174
+        y: 0
+        width: 1729
+        height: 1551
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73feb91087f0b71c0800000000000000
+      internalID: -4504989994156560585
       vertices: []
       indices: 
       edges: []
@@ -160,8 +185,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      211_4_0: 4053014912106633160
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
