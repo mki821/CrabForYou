@@ -10,6 +10,8 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public event Action RopeEvent;
     public event Action RopeCancelEvent;
     public event Action UpEvent;
+    public event Action MinimapEvent;
+    public event Action MinimapCancelEvent;
 
     public Vector2 Movement { get; private set; }
     public Vector2 MouseScreenPos { get; private set; }
@@ -59,5 +61,10 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public void OnMousePos(InputAction.CallbackContext context) {
         MouseScreenPos = context.ReadValue<Vector2>();
+    }
+
+    public void OnMinimap(InputAction.CallbackContext context) {
+        if(context.performed) MinimapEvent?.Invoke();
+        else if(context.canceled) MinimapCancelEvent?.Invoke();
     }
 }

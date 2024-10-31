@@ -24,12 +24,16 @@ public class Player : Entity
     public InputReader Input => _inputReader;
 
     public PlayerRope Rope { get; private set; }
+    public Weapon Weapon { get; private set; }
     
     protected override void Awake() {
         base.Awake();
 
         PlayerManager.Instance.Player = this;
         PlayerManager.Instance.PlayerTrm = transform;
+
+        //KJH code maybe conflict just merge
+        Weapon = transform.Find("Weapon").GetComponent<Weapon>();
 
         Rope = GetComponent<PlayerRope>();
         Rope.Initialize(this);
@@ -71,5 +75,10 @@ public class Player : Entity
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3)_groundCheckOffset, _groundCheckBoxSize);
+    }
+
+    public void ChangeWeapon(Weapon weapon)
+    {
+        Weapon = weapon;
     }
 }

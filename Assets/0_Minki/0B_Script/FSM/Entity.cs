@@ -18,6 +18,7 @@ public class Entity : MonoBehaviour
     
     public int FacingDirection { get; protected set; } = 1;
     public bool CanStateChangeable { get; set; } = true;
+    public bool CanFlipControl{ get; set; } = true;
 
     protected virtual void Awake() {
         Transform visaulTrm = transform.Find("Visual");
@@ -64,6 +65,7 @@ public class Entity : MonoBehaviour
 
     public virtual void FlipController(float x) {
         if(Mathf.Abs(x) < 0.05f) return;
+        if (!CanFlipControl) return;
         
         if(Mathf.Abs(FacingDirection + Mathf.Sign(x)) < 0.5f)
             Flip();
