@@ -41,6 +41,7 @@ public class DashEnemyAttackState : EnemyState<DashEnemyStateEnum> {
         Vector2 startPos = enemy.transform.position;
         Vector2 endPos = new Vector2(enemy.transform.position.x + (enemy.canAttackRange.x + n) * enemy.FacingDirection, enemy.transform.position.y);
 
+        SoundManager.Instance.PlaySFX("SHOOK");
         while (elapseTime < targetTime) {
             t = easeOutExpo(elapseTime / targetTime);
             enemy.transform.position = Vector2.Lerp(startPos, endPos, t);

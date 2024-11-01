@@ -90,6 +90,7 @@ public class BossPattern1State : EnemyState<BossStateEnum> {
             elapseTime += Time.deltaTime;
             yield return null;
         }
+        SoundManager.Instance.PlaySFX("Quang");
 
         yield return new WaitForSeconds(1f);
 
