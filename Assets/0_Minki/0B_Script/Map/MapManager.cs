@@ -137,9 +137,11 @@ public class MapManager : MonoSingleton<MapManager>
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
 
-        for(int i = -5; i <= 5; ++i) {
-            for(int j = -5; j <= 5; ++j) {
-                Gizmos.DrawWireCube(transform.position + new Vector3(_mapOffset.x * j, _mapOffset.y * i), new Vector2(_mapOffset.x - 0.5f, _mapOffset.y - 0.5f));
+        for(int i = 0; i < _mapMaxSize.y; ++i) {
+            for(int j = 0; j < _mapMaxSize.x; ++j) {
+                float x = j - _mapMaxSize.x / 2;
+                float y = i - _mapMaxSize.y / 2;
+                Gizmos.DrawWireCube(transform.position + new Vector3(_mapOffset.x * x, _mapOffset.y * y), new Vector2(_mapOffset.x - 0.5f, _mapOffset.y - 0.5f));
             }
         }
     }
