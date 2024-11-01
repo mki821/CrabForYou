@@ -629,9 +629,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapPrefabs:
+  - {fileID: 1978506820607517487, guid: 67d5af59d9b526341b64d33bc02f48bd, type: 3}
   - {fileID: 804881261051449011, guid: f6d9aea10262dee4dbb465318cb4185c, type: 3}
   - {fileID: 1258381953563819341, guid: d5385798d6f7a694799cc81e50940d6f, type: 3}
   - {fileID: 7980270342631336182, guid: 822db5821bf9a3b409fa9b13a37f9954, type: 3}
+  - {fileID: 1094224228776239194, guid: efbcf584526cb81428b08000f0f5aa83, type: 3}
+  - {fileID: 7921926456405025008, guid: 1ab7001ff27898042a5f9805757978f4, type: 3}
+  - {fileID: 182064755737450080, guid: 1a9d2d36d1608e6429de2472cfe9544f, type: 3}
+  - {fileID: 3613107924735070738, guid: 4718406b52b0c654eba36bf5e7d83b2c, type: 3}
+  - {fileID: 5002851999172467698, guid: 11f747bc9d93b7f4cb0e1e523cb44923, type: 3}
   _mapOffset: {x: 51, y: 51}
   _mapMaxSize: {x: 5, y: 5}
   _minimapTrm: {fileID: 1838282830}
