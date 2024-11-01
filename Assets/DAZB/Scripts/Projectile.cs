@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.TryGetComponent<IDamageable>(out IDamageable component) && other) {
+        if (other.TryGetComponent<IDamageable>(out IDamageable component) && other.gameObject.layer == LayerMask.NameToLayer("Player")) {
             component.ApplyDamage();
         }
     }

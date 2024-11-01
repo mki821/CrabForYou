@@ -13,6 +13,8 @@ public class BossDeadState : EnemyState<BossStateEnum> {
 
         Particle go = enemy.CreateObject(boss.deadParticle);
         go.transform.position = enemy.transform.position;
-        go.Destroy(10);
+        go.Destroy(1);
+
+        boss.gameObject.SetActive(false);
     }
 }

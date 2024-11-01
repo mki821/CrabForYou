@@ -715,6 +715,7 @@ GameObject:
   - component: {fileID: 4987094233963554600}
   - component: {fileID: 4038761326920152570}
   - component: {fileID: 2831145890869350742}
+  - component: {fileID: 3526440743465281254}
   m_Layer: 7
   m_Name: Enemy_Blast
   m_TagString: Untagged
@@ -945,3 +946,18 @@ MonoBehaviour:
   Hand: {fileID: 6151187864109224616}
   body: {fileID: 6748899559494098436}
   aimingSpeed: 20
+--- !u!114 &3526440743465281254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898709139638089230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15241c87580584b47a5eb42d956d9786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 64

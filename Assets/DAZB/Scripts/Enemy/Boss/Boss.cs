@@ -58,6 +58,10 @@ public class Boss : Enemy {
 
     private void Update() {
         StateMachine.CurrentState.UpdateState();
+
+        if (isDead) {
+            StateMachine.ChangeState(BossStateEnum.Dead);
+        }
     }
 
     public bool CanPatternStart() {
