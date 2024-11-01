@@ -4,6 +4,9 @@ using UnityEngine;
 public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
     LaserEnemy enemy;
 
+    private Vector3 originalHandLocalPosition;
+    private Quaternion originalHandLocalRotation;
+
     public LaserEnemyAttackState(Enemy enemy, EnemyStateMachine<LaserEnemyStateEnum> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
         this.enemy = enemy as LaserEnemy;
@@ -22,15 +25,22 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
 
         playerTrm = PlayerManager.Instance.Player.transform;
 
-        enemy.lineRendererCompo.enabled = true;
+        originalHandLocalPosition = enemy.Hand.transform.localPosition;
+        originalHandLocalRotation = enemy.Hand.transform.localRotation;
 
-        //enemy.StartCoroutine(AttackRoutine());
+        enemy.StartDelayCallback(2f, () => {
+            isShootReady = true;
+            enemy.lineRendererCompo.enabled = true;
+            enemy.StartCoroutine(AttackRoutine());
+        });
     }
 
     public override void Exit() {
         enemy.lineRendererCompo.enabled = false;
         enemy.lastAttackTime = Time.time;
 
+
+        isShootReady = false;
         base.Exit();
     }
 
@@ -42,9 +52,9 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
             return;
         }
 
-        //if (isShootReady) return;
+        if (isShootReady) return;
 
-        direction = playerTrm.position - enemy.transform.position;
+        direction = playerTrm.position - enemy.body.transform.position;
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         enemy.FlipController(direction.x);
@@ -56,11 +66,11 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
         Vector3[] laserPositions = { startLaserPosition, smoothEndPosition };
         enemy.lineRendererCompo.SetPositions(laserPositions);
 
-        Vector3 targetPosition = enemy.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
+        Vector3 targetPosition = enemy.body.transform.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * 1.5f, Mathf.Sin(angle * Mathf.Deg2Rad) * 1.5f);
         enemy.Hand.transform.position = Vector3.Lerp(enemy.Hand.transform.position, targetPosition, enemy.aimingSpeed * Time.deltaTime);
 
         finallyShootDir = smoothEndPosition - startLaserPosition;
-        float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg;
+        float smoothAngle = Mathf.Atan2(finallyShootDir.y, finallyShootDir.x) * Mathf.Rad2Deg + 120;
         enemy.Hand.transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
     }
 
@@ -124,13 +134,32 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
 
         while (elapseTime < targetTime) {
             float t = easeInCirc(elapseTime / targetTime);
-            width = Mathf.Lerp(0.5f, 0.1f, t);
+            width = Mathf.Lerp(0.5f, 0f, t);
             enemy.lineRendererCompo.startWidth = width;
             enemy.lineRendererCompo.endWidth = width;
 
             elapseTime += Time.deltaTime;
             yield return null;
         }
+
+        elapseTime = 0;
+        targetTime = 0.5f;
+
+        Vector3 startHandPosition = enemy.Hand.transform.localPosition;
+        Quaternion startHandRotation = enemy.Hand.transform.localRotation;
+
+        while (elapseTime < targetTime) {
+            float t = elapseTime / targetTime;
+
+            enemy.Hand.transform.localPosition = Vector3.Lerp(startHandPosition, originalHandLocalPosition, t);
+            enemy.Hand.transform.localRotation = Quaternion.Slerp(startHandRotation, originalHandLocalRotation, t);
+
+            elapseTime += Time.deltaTime;
+            yield return null;
+        }
+
+        enemy.Hand.transform.localPosition = originalHandLocalPosition;
+        enemy.Hand.transform.localRotation = originalHandLocalRotation;
 
         stateMachine.ChangeState(LaserEnemyStateEnum.Battle);
     }
