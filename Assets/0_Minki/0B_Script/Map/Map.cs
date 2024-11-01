@@ -101,9 +101,9 @@ public class Map : MonoBehaviour
         _enemyCount = _enemyList.Count;
         for(int i = 0; i < _enemyList.Count; ++i) {
             _enemyList[i].gameObject.SetActive(true);
-            _enemyList[i].DeadEvent += () => {
+            _enemyList[i].DeadEvent += (enemy) => {
+                _enemyList.Remove(enemy);
                 DecreaseCount();
-                _enemyList.RemoveAt(i);
             };
         }
     }

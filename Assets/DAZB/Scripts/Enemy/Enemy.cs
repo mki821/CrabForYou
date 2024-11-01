@@ -21,7 +21,7 @@ public abstract class Enemy : Entity, IDamageable {
 
     public DamageCaster damageCasterCompo {get; private set;}
 
-    public event Action DeadEvent;
+    public event Action<Enemy> DeadEvent;
 
     protected override void Awake()
     {
@@ -67,7 +67,7 @@ public abstract class Enemy : Entity, IDamageable {
 
         if (health <= 0) {
             isDead = true;
-            DeadEvent?.Invoke();
+            DeadEvent?.Invoke(this);
         }
     }
     public abstract void Catched();

@@ -27,6 +27,7 @@ public class Portal : MonoBehaviour
         if(_isOpened) {
             trm.position = connectedPortal.transform.position;
             MapManager.Instance.SetPlayerPosition(connectedPortal.map.mapPosition);
+            connectedPortal.map.EnterPlayer();
         }
     }
 }

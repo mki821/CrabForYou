@@ -239,4 +239,6 @@ MonoBehaviour:
   lastAttackTime: 0
   canAttackRange: {x: 5, y: 5}
   canAttackCheckOffset: {x: 0, y: 0}
+  health: 0
   isCatchCanceled: 0
+  isAttack: 0
