@@ -1,7 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using UnityEditor.Search;
 
 public class TitleScene : MonoBehaviour
 {
