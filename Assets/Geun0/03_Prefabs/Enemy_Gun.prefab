@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 1942717590665178683}
   - component: {fileID: 3711629297409265058}
   - component: {fileID: 7465168876305354932}
+  - component: {fileID: 2220023423640309154}
   m_Layer: 7
   m_Name: Enemy_Gun
   m_TagString: Untagged
@@ -512,6 +513,21 @@ MonoBehaviour:
   escapeCooldown: 0
   body: {fileID: 1319951594378224395}
   lastEscapeTime: 0
+--- !u!114 &2220023423640309154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2904705434260614236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15241c87580584b47a5eb42d956d9786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3284533806409160884
 GameObject:
   m_ObjectHideFlags: 0

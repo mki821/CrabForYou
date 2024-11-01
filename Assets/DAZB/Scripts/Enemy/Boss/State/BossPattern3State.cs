@@ -33,7 +33,7 @@ public class BossPattern3State : EnemyState<BossStateEnum> {
         float targetTime = 2f;
 
         Vector2 direction = (playerTrm.position - boss.transform.position).normalized;
-        Vector2 rotatedDirection1, rotatedDirection2;
+        Vector2 rotatedDirection1 = Vector2.zero, rotatedDirection2 = Vector2.zero;
 
         // 초기 LineRenderer 설정
         boss.lineRendererCompo.startWidth = 0.2f;
@@ -67,6 +67,7 @@ public class BossPattern3State : EnemyState<BossStateEnum> {
         }
 
         yield return new WaitForSeconds(1f);
+
 
         // 빔 너비 감소 루프
         elapseTime = 0;
