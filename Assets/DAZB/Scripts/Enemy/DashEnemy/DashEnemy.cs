@@ -8,6 +8,8 @@ public enum DashEnemyStateEnum {
 public class DashEnemy : Enemy {
     public EnemyStateMachine<DashEnemyStateEnum> StateMachine {get; private set;}
 
+    public bool isAttack = false;
+
     protected override void Awake() {
         base.Awake();
         StateMachine = new EnemyStateMachine<DashEnemyStateEnum>();
@@ -40,4 +42,12 @@ public class DashEnemy : Enemy {
 
     public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     public override void Attack() => StateMachine.CurrentState.AnimationAttackTrigger();
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (isAttack == true) {
+            if (other.TryGetComponent<IDamageable>(out IDamageable component) && other.gameObject.layer == whatIsPlayer) {
+                component.ApplyDamage();
+            }
+        }
+    }
 }

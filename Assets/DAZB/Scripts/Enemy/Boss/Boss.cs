@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum BossStateEnum {
-    WaitPattern, Pattern1, Pattern2, Pattern3
+    WaitPattern, Pattern1, Pattern2, Pattern3, Dead
 }
 
 public class Boss : Enemy {
@@ -23,6 +23,7 @@ public class Boss : Enemy {
     public List<Enemy> enemyPrefabs;
 
     [HideInInspector] public float lastPattenTime;
+    public Particle deadParticle;
 
     public LineRenderer lineRendererCompo;
 

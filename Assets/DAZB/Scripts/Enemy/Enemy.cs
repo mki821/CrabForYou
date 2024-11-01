@@ -19,7 +19,16 @@ public abstract class Enemy : Entity, IDamageable {
     [SerializeField] private int health;
     [HideInInspector] public bool isCatchCanceled;
 
+    public DamageCaster damageCasterCompo {get; private set;}
+
     public event Action DeadEvent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        damageCasterCompo = GetComponent<DamageCaster>();
+    }
 
     public abstract void AnimationFinishTrigger();
     public abstract void Attack();

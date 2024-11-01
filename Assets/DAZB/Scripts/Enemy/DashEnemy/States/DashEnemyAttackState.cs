@@ -2,18 +2,25 @@ using System.Collections;
 using UnityEngine;
 
 public class DashEnemyAttackState : EnemyState<DashEnemyStateEnum> {
+    DashEnemy enemy;
+
     public DashEnemyAttackState(Enemy enemy, EnemyStateMachine<DashEnemyStateEnum> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        this.enemy = enemy as DashEnemy;
     }
     
     public override void Enter() {
         base.Enter();
+
+        enemy.isAttack = true;
 
         enemy.StartCoroutine(DashRoutine());
     }
 
     public override void Exit() {
         enemy.lastAttackTime = Time.time;
+
+        enemy.isAttack = false;
 
         base.Exit();
     }

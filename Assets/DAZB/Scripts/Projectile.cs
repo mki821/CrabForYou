@@ -11,4 +11,10 @@ public class Projectile : MonoBehaviour {
         transform.position = position;
         rigidbodyCompo.AddForce(direction * power, ForceMode2D.Impulse);
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.TryGetComponent<IDamageable>(out IDamageable component) && other) {
+            component.ApplyDamage();
+        }
+    }
 }

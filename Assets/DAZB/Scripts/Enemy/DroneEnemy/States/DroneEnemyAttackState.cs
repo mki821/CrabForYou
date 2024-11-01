@@ -2,8 +2,11 @@ using System.Collections;
 using UnityEngine;
 
 public class DroneEnemyAttackState : EnemyState<DroneEnemyStateEnum> {
+    private DroneEnemy enemy;
+
     public DroneEnemyAttackState(Enemy enemy, EnemyStateMachine<DroneEnemyStateEnum> stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        this.enemy = enemy as DroneEnemy;
     }
 
     private Transform playerTrm;
@@ -16,12 +19,16 @@ public class DroneEnemyAttackState : EnemyState<DroneEnemyStateEnum> {
         playerTrm = PlayerManager.Instance.Player.transform;
 
         enemy.StopImmediately(true);
+
+        enemy.isAttack = true;
     
         coroutine = enemy.StartCoroutine(DashRoutine());
     }
 
     public override void Exit() {
         enemy.lastAttackTime = Time.time;
+
+        enemy.isAttack = false;
 
         enemy.StopCoroutine(coroutine);
 

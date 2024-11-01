@@ -8,6 +8,8 @@ public enum DroneEnemyStateEnum {
 public class DroneEnemy : Enemy {
     public EnemyStateMachine<DroneEnemyStateEnum> StateMachine {get; private set;}
 
+    public bool isAttack = false;
+
     protected override void Awake() {
         base.Awake();
         StateMachine = new EnemyStateMachine<DroneEnemyStateEnum>();
@@ -39,5 +41,13 @@ public class DroneEnemy : Enemy {
 
     public override void Catched() {
         StateMachine.ChangeState(DroneEnemyStateEnum.Catched);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (isAttack == true) {
+            if (other.TryGetComponent<IDamageable>(out IDamageable component) && other.gameObject.layer == whatIsPlayer) {
+                component.ApplyDamage();
+            }
+        }
     }
 }
