@@ -45,7 +45,7 @@ public class BossPattern3State : EnemyState<BossStateEnum> {
         boss.lineRendererCompo.SetPosition(1, playerTrm.position);
         boss.lineRendererCompo.SetPosition(2, boss.rightEyeTrm.position);
         boss.lineRendererCompo.SetPosition(3, playerTrm.position);
-
+        SoundManager.Instance.PlaySFX("LaserBeam5");
         yield return new WaitForSeconds(2f);
 
         // 회전 각도 설정 루프

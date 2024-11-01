@@ -77,6 +77,7 @@ public class RangeEnemyAttackState : EnemyState<RangeEnemyStateEnum> {
 
     private IEnumerator ShootRoutine() {
         yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySFX("LaserGun");
         Projectile projectile = enemy.CreateProjectile();
         projectile.Shoot(enemy.firePos.position, finallyShootDir, enemy.shootPower);
 
