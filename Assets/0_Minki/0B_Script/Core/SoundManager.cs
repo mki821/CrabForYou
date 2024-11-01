@@ -14,6 +14,8 @@ public class SoundManager : MonoSingleton<SoundManager>
     private Dictionary<string, AudioClip> _clipDictionary = new Dictionary<string, AudioClip>();
 
     protected override void Awake() {
+        _dontDestroyOnLoad = true;
+
         base.Awake();
         
         for(int i = 0; i < _clips.Length; ++i) {

@@ -1703,7 +1703,11 @@ MonoBehaviour:
   _mixer: {fileID: 24100000, guid: 94d17471d73445c48b9268b7b39b0e5d, type: 2}
   _bgmSource: {fileID: 1543374010}
   _sfxSource: {fileID: 1543374009}
-  _clips: []
+  _clips:
+  - {fileID: 8300000, guid: 4b3d15bec00f65445886ef9ac90967e1, type: 3}
+  - {fileID: 8300000, guid: 2172c740f6b1a2441841daee55998f1b, type: 3}
+  - {fileID: 8300000, guid: 9d7162c888990264dbb3d171eb9e6050, type: 3}
+  - {fileID: 8300000, guid: 72190059e19ad214a9a2f8b820443da1, type: 3}
 --- !u!82 &1543374009
 AudioSource:
   m_ObjectHideFlags: 0

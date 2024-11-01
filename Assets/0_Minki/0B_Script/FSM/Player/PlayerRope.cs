@@ -78,7 +78,8 @@ public class PlayerRope : MonoBehaviour
 
             yield return null;
         }
-        
+
+        SoundManager.Instance.PlaySFX("GGANG");
         _isGrab = true;
         _player.StateMachine.ChangeState(PlayerStateEnum.Rope);
     }

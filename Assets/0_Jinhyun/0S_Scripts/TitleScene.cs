@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEditor.Search;
 
 public class TitleScene : MonoBehaviour
 {
@@ -10,34 +11,37 @@ public class TitleScene : MonoBehaviour
 
     public void QuitGameBtn()
     {
+        SoundManager.Instance.PlaySFX("UICLICK");
         Application.Quit();
     }
 
     public void StartGameBtn()
     {
+        SoundManager.Instance.PlaySFX("UICLICK");
         Sequence seq = DOTween.Sequence();
         _crab.SetActive(true);
         seq.Append(_crab.transform.DOScale(new Vector2(5, 5), 1f).SetEase(Ease.InQuad));
+        seq.AppendCallback(() => {
+            SoundManager.Instance.PlaySFX("GGANG");
+        });
         seq.AppendInterval(0.2f);
-        seq.AppendCallback(() =>
-        {
+        seq.AppendCallback(() => {
             _leftHand.transform.parent = null;
             _rightHand.transform.parent = null;
         });
+        seq.Join(_leftHand.transform.DOMove(new Vector2(-5.12f, 2.92f), 1.1f).SetEase(Ease.InElastic));
         seq.AppendCallback(() =>
         {
-            print(null);
-            //SoundManager.Instance.PlayOneShot("DDAKDDAK.wav");
+            SoundManager.Instance.PlaySFX("SHOOK");
         });
-        seq.Append(_leftHand.transform.DOMove(new Vector2(-5.12f, 2.92f), 1.1f).SetEase(Ease.InElastic));
-        seq.AppendInterval(0.2f);
-        seq.AppendCallback(() =>
-        {
-            print(null);
-            //SoundManager.Instance.PlayOneShot("DRILLWIING.wav");
+        seq.AppendInterval(1f);
+        seq.AppendCallback(() => {
+            SoundManager.Instance.PlaySFX("DRILLWIING");
         });
-        seq.Append(_rightHand.transform.DOMove(new Vector2(5.28f, 4.53f), 1.5f).SetEase(Ease.Linear));
+        seq.AppendInterval(0.1f);
+        seq.Join(_rightHand.transform.DOMove(new Vector2(5.28f, 4.53f), 1.5f).SetEase(Ease.Linear));
         seq.Join(_rightHand.transform.DORotate(Vector3.zero, 0.8f));
+        seq.AppendInterval(1.5f);
         seq.AppendInterval(0.5f);
         seq.AppendCallback(() => SceneManager.LoadScene(1));
     }
