@@ -88,8 +88,11 @@ public class Map : MonoBehaviour
         if(_isVisited) return;
 
         _isVisited = true;
-        ClosePortal();
-        StartCoroutine(SpawnEnemy());
+
+        if(_enemyList.Count > 0) {
+            ClosePortal();
+            StartCoroutine(SpawnEnemy());
+        }
     }
 
     private IEnumerator SpawnEnemy() {
