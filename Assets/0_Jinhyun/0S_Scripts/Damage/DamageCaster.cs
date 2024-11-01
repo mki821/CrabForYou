@@ -33,6 +33,7 @@ public class DamageCaster : MonoBehaviour
             if (col.TryGetComponent(out IDamageable target))
             {
                 Debug.Log($"{col.gameObject.name} hit");
+                if ((target as Entity).isDead) return;
                 target.ApplyDamage(damage);
             }
         }
@@ -46,6 +47,7 @@ public class DamageCaster : MonoBehaviour
             if (col.TryGetComponent(out IDamageable target))
             {
                 Debug.Log($"{col.gameObject.name} hit");
+                if ((target as Entity).isDead) return;
                 target.ApplyDamage(damage);
             }
         }
