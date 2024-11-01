@@ -37,11 +37,9 @@ public class WeaponController : MonoBehaviour
 
     public void Move()
     {
-        print("��������");
         if (curRoutine != null)
             return;
         curRoutine = StartCoroutine(AttackToMousePos());
-        print("��������2");
     }
 
     private IEnumerator AttackToMousePos()
@@ -87,7 +85,7 @@ public class WeaponController : MonoBehaviour
 
                 for (int i = 0; i < 3; i++)
                 {
-                    //SoundManager.Instance.PlayOneShot("DRILLWIING.wav");
+                    SoundManager.Instance.PlaySFX("DRILLWIING");
                     player.Weapon.Attack(player);
                     while (delta < targetTime)
                     {
