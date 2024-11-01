@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 38185211857734995}
   - component: {fileID: 5735924830843368738}
   - component: {fileID: 7904204735869875748}
+  - component: {fileID: 4017761925361396469}
   m_Layer: 7
   m_Name: Enemy_Drone
   m_TagString: Untagged
@@ -305,6 +306,22 @@ MonoBehaviour:
   canAttackCheckOffset: {x: 0, y: 0}
   health: 0
   isCatchCanceled: 0
+  isAttack: 0
+--- !u!114 &4017761925361396469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937042962906728349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15241c87580584b47a5eb42d956d9786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8737184403217066870
 GameObject:
   m_ObjectHideFlags: 0

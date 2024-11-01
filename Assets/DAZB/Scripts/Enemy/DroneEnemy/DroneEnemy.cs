@@ -43,9 +43,9 @@ public class DroneEnemy : Enemy {
         StateMachine.ChangeState(DroneEnemyStateEnum.Catched);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (isAttack == true) {
-            if (other.TryGetComponent<IDamageable>(out IDamageable component) && other.gameObject.layer == whatIsPlayer) {
+     private void OnTriggerEnter2D(Collider2D other) {
+        if (isAttack) {
+            if (other.TryGetComponent<IDamageable>(out IDamageable component) && other.gameObject.layer == LayerMask.NameToLayer("Player")) {
                 component.ApplyDamage();
             }
         }

@@ -126,6 +126,7 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
             yield return null;
         }
 
+        // 여기에 캐스트
         yield return new WaitForSeconds(3f);
 
         
