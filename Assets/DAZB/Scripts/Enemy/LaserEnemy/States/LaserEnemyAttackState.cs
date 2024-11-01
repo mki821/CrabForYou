@@ -125,8 +125,7 @@ public class LaserEnemyAttackState : EnemyState<LaserEnemyStateEnum> {
             elapseTime += Time.deltaTime;
             yield return null;
         }
-
-        // 여기에 캐스트
+        SoundManager.Instance.PlaySFX("LaserBeam3");
         yield return new WaitForSeconds(3f);
 
         
